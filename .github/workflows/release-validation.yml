@@ -1,0 +1,22 @@
+name: release validation
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  validate:
+    uses: MCEnvision/.github/.github/workflows/release-validation.yml@2984594f1e03ee168e28c4c80701ca1e84f8cbcd
+    with:
+      shared-ref: "2984594f1e03ee168e28c4c80701ca1e84f8cbcd"
